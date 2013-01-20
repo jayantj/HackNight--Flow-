@@ -1,0 +1,54 @@
+<html>
+
+<head>
+	<script type="text/javascript" src = "Scripts/jquery.js"></script>
+	<script type="text/javascript" src = "Scripts/Grid.js"></script>
+	<script type="text/javascript" src = "Scripts/Circle.js"></script>
+	<script type="text/javascript" src = "Scripts/Level.js"></script>
+	<script type="text/javascript" src = "Scripts/DrawLevel.js"></script>
+	<script type="text/javascript" src = "Scripts/DrawPath.js"></script>
+	<script type="text/javascript" src = "Scripts/GetClickedTile.js"></script>
+	<link rel = "stylesheet" href = "Scripts/special.css" type = "text/css">
+
+	<script type="text/javascript">
+
+	$(document).ready(function()
+	{
+		var canvas = $('<canvas/>').attr({width: cWidth, height: cHeight}).appendTo('body');
+		var context = canvas.get(0).getContext("2d");
+		var selectedNode = false;
+		var lastTile, currTile;
+	drawBoard(context);
+	//drawCircle(context, "red", 5, 6);
+	drawLevel(context);
+
+		$(canvas).click(function(a)
+		{
+			console.log((a.pageX - p) + " "+  (a.pageY - p));
+			console.log(bWidth + " " + bHeight);
+			currTile = getClickedTile(a.pageX, a.pageY);
+
+			if(level[currTile.row][currTile.column])
+				selectedNode = true;	
+			//drawCircle(context, "red", tile.row, tile.column);
+		});
+
+		$(canvas).mousemove(function(a)
+		{
+			if(selectedNode)
+			{
+				lastTile = currTile;
+				currTile = getClickedTile(a.pageX, a.pageY);
+				drawPath(context, lastTile, currTile);
+			}
+
+		});
+
+	});
+
+	</script>
+	</head>
+
+	<body>
+	</body>
+</html>
